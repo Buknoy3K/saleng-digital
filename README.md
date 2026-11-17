@@ -11,10 +11,10 @@ Everything is on one long home page (`index.html`). The menu scrolls to each sec
 | `#services` | By business type (tabs: shops, laundries, offices, firms, something else) + Audit / Build / Support |
 | `#work` | One row per client, with a screenshot that follows the cursor |
 | `#pricing` | Spark / Flame / Bonfire + Care Plan + what every package includes |
-| `#about` | A startup by IT students of La Trinidad, the 17 of 20 survey, why "saleng" |
+| `#about` | Vision and Mission, Built here / Priced for here / Supported here, built by IT students |
 | `#contact` | Phone and email, with call / email / copy buttons, service area |
 
-The only other pages are the client stories in `work/` (Doc. Rena, Auntie Analyn, CCDC, Garcia). They hold the extra screenshots and photo.
+The only other pages are the client stories in `work/` (Snack Stop POS, ACA Laundry Kiosk, CCDC, Garcia). They hold the extra screenshots and photo.
 
 ## Edit
 - **Phone, email, prices, feature counts, "15 minutes", survey numbers, Garcia's result**: `assets/js/content.js`. Anything still containing `___` shows with an amber dashed outline. The **Call now** and **Email us** buttons stay off while their value is blank.
