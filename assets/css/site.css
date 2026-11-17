@@ -337,6 +337,9 @@ a.row:hover .row-arrow { transform: rotate(-45deg); opacity: 1; }
 }
 @media (max-width: 340px) { .triad li { padding: 7px 8px; font-size: 11px; } }
 
+.lineup { opacity: 0; transform: translateY(48px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+.lineup.in { opacity: 1; transform: none; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; transition-duration: .01ms !important; }

@@ -173,6 +173,19 @@
   // ── pricing rows open on tap too ──
   document.querySelectorAll('.pk').forEach(pk => pk.addEventListener('click', () => pk.classList.toggle('open')));
 
+  // ── phone: work rows and pricing cards line up one by one as you scroll ──
+  if (!RM && matchMedia('(hover: none), (max-width: 760px)').matches && 'IntersectionObserver' in window) {
+    const items = document.querySelectorAll('.rows .row, .stack .pk');
+    items.forEach(el => el.classList.add('lineup'));
+    const io = new IntersectionObserver(es => {
+      es.filter(e => e.isIntersecting).forEach((e, i) => {
+        e.target.style.transitionDelay = (i * 140) + 'ms';
+        e.target.classList.add('in'); io.unobserve(e.target);
+      });
+    }, { threshold: .2, rootMargin: '0px 0px -8% 0px' });
+    items.forEach(el => io.observe(el));
+  }
+
   // ── work rows: screenshot follows the cursor ──
   const rows = document.querySelectorAll('.row[data-peek]');
   if (rows.length && matchMedia('(hover: hover)').matches) {
