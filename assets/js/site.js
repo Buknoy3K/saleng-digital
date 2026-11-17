@@ -184,6 +184,17 @@
       });
     }, { threshold: .2, rootMargin: '0px 0px -8% 0px' });
     items.forEach(el => io.observe(el));
+    // the item nearest the middle of the screen lights up, like hover on a computer
+    const lightable = [...document.querySelectorAll('a.row, .stack .pk')];
+    let tick = false;
+    const light = () => {
+      tick = false;
+      const mid = innerHeight / 2; let best = null, bd = innerHeight * .3;
+      lightable.forEach(el => { const r = el.getBoundingClientRect(), d = Math.abs(r.top + r.height / 2 - mid); if (d < bd) { bd = d; best = el; } });
+      lightable.forEach(el => el.classList.toggle('lit', el === best));
+    };
+    addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(light); } }, { passive: true });
+    light();
   }
 
   // ── work rows: screenshot follows the cursor ──
