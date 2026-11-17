@@ -256,6 +256,9 @@ a.row:hover .row-arrow, a.row.lit .row-arrow { transform: rotate(-45deg); opacit
 .shots { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 16px; align-items: start; }
 .shots.pair { display: block; position: relative; padding-bottom: 9%; }
 .shots.pair .dev.phone { position: absolute; left: -3%; bottom: 0; width: 22%; max-width: none; margin: 0; }
+.shots.pair .dev.phone { width: 30%; padding: 12px; border-radius: 26px; }
+.shots.pair .dev.phone img { border-radius: 16px; }
+@media (max-width: 480px) { .shots.pair .dev.phone { width: 31%; padding: 8px; border-radius: 18px; } .shots.pair .dev.phone img { border-radius: 10px; } }
 .shots.one { grid-template-columns: 1fr; }
 .shots.even { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .shot { margin: 0; }
