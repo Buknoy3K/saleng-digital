@@ -344,6 +344,58 @@ a.row:hover .row-arrow, a.row.lit .row-arrow { transform: rotate(-45deg); opacit
   .row-arrow { width: 36px; height: 36px; grid-row: 1 / span 2; align-self: center; }
   .more { margin-top: 14px; }
 }
+/* ── phone type + spacing: tighter, so nothing feels wide or crowded ── */
+@media (max-width: 600px) {
+  :root { --gut-l: max(18px, env(safe-area-inset-left, 0px)); --gut-r: max(18px, env(safe-area-inset-right, 0px)); }
+  body { font-size: 16px; }
+  .nav { padding-block: 14px; }
+  .wm { font-size: 19px; }
+  .burger { width: 42px; height: 42px; }
+  .hero { margin-top: -70px; padding-top: 70px; }
+  .hero-in { padding-block: 16px 44px; }
+  .hero-kicker { font-size: 30px; margin-bottom: 4px; }
+  .hero-row { margin-top: 18px; gap: 10px; }
+  .hero-row .lbl { font-size: 11px; letter-spacing: .1em; padding-top: 0; }
+  .hero-act { flex-direction: column; flex-wrap: nowrap; gap: 10px; margin-top: 8px; }
+  .hero-act .btn { justify-content: center; padding: 15px 20px; }
+  .hero-lead { font-size: 18px; }
+  .btn { font-size: 15px; }
+  .panel-in { padding-block: 48px 0; }
+  .chapter + .chapter { margin-top: 72px; }
+  .chap-h { margin-bottom: 24px; gap: 10px; }
+  .lbl { font-size: 11px; }
+  .big-quote { font-size: 28px; max-width: none; }
+  .chips a, .chips span { font-size: 13px; padding: 8px 13px; }
+  .sec-h { grid-template-columns: minmax(0, 1fr); gap: 14px; padding-bottom: 20px; }
+  .sec-h h2 { font-size: 32px; line-height: 1; }
+  .sec-h h2 br { display: none; }
+  .sec-h p { font-size: 15px; max-width: none; line-height: 1.5; }
+  .biz { margin-top: 20px; padding: 20px; gap: 22px; border-radius: 22px; }
+  .biz-copy { gap: 14px; }
+  .biz-pain { font-size: 25px; }
+  .biz-built { padding-top: 14px; }
+  .biz-built strong { font-size: 18px; }
+  .sub + .sub { margin-top: 56px; }
+  .sub-h { font-size: 28px; margin-bottom: 18px; }
+  .step { padding: 22px 0; gap: 10px; }
+  .step h3 { font-size: 30px; }
+  .row-name { font-size: 24px; }
+  .pk-head h3 { font-size: 48px; }
+  .pk-head { padding-block: 16px; }
+  .pk-body p { font-size: 17px; }
+  .incl { margin-top: 40px; }
+  .incl div { padding: 20px; gap: 6px; }
+  .incl strong { font-size: 24px; }
+  .vm { gap: 28px; margin-bottom: 48px; }
+  .vm p { font-size: 22px; max-width: none; }
+  .call { gap: 20px; }
+  .phone-num { font-size: clamp(40px, 13vw, 56px); }
+  .mail-addr { font-size: 22px; }
+  .area strong { font-size: 22px; }
+  .end { margin-top: 64px; gap: 20px; }
+  .end h2 { font-size: 44px; }
+  .foot { padding-block: 28px; gap: 22px; font-size: 14px; }
+}
 @media (max-width: 340px) { .triad li { padding: 7px 8px; font-size: 11px; } }
 
 .lineup { opacity: 0; transform: translateY(48px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
