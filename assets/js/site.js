@@ -235,7 +235,7 @@
         el.style.transform = `translate3d(${Math.sin(t) * R}px, 0, ${(c - 1) * R * 1.15}px) rotateY(${t * 28}deg)`;
         el.style.zIndex = Math.round(k * 100);
         el.style.opacity = (.25 + .75 * k * k).toFixed(3);
-        el.style.filter = `brightness(${(.35 + .65 * k).toFixed(3)})`;
+        el.firstElementChild.style.filter = `brightness(${(.35 + .65 * k).toFixed(3)})`;
       });
       const a = Math.round(pos) % n;
       if (a !== active) {
