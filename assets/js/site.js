@@ -221,7 +221,7 @@
       // on a phone the tabs scroll sideways: keep the chosen one in view (without moving the page)
       const on = tabs.find(t => t.dataset.for === id), strip = on && on.parentElement;
       if (strip && strip.scrollWidth > strip.clientWidth) strip.scrollTo({ left: on.offsetLeft - (strip.clientWidth - on.offsetWidth) / 2, behavior: RM ? 'auto' : 'smooth' });
-      panes.forEach(p => p.hidden = p.id !== id);
+      if (!document.querySelector('.biz-pin.on')) panes.forEach(p => p.hidden = p.id !== id);
     };
     tabs.forEach(t => t.addEventListener('click', () => { history.replaceState(null, '', '#' + t.dataset.for); show(t.dataset.for); }));
     tabs.forEach((t, i) => t.addEventListener('keydown', e => {
@@ -229,5 +229,39 @@
       if (d) { const n = tabs[(i + d + tabs.length) % tabs.length]; n.focus(); n.click(); }
     }));
     show(location.hash.slice(1));
+
+    // scroll-driven: the section pins and the cards slide sideways as you scroll (phone and PC)
+    const pin = document.querySelector('.biz-pin'), stick = pin && pin.querySelector('.biz-stick'), track = pin && pin.querySelector('.biz-track');
+    if (pin && !RM) {
+      pin.classList.add('on'); panes.forEach(p => p.hidden = false);
+      let cur = -1, range = 1;
+      const size = () => {
+        const vh = window.innerHeight;
+        track.style.setProperty('--shot-h', Math.max(160, vh - 520) + 'px');
+        pin.style.height = '';
+        range = Math.round(vh * .55) * (panes.length - 1);
+        pin.style.height = (stick.offsetHeight + range) + 'px';
+      };
+      const set = i => {
+        if (i === cur) return; cur = i;
+        track.style.setProperty('--i', i);
+        panes.forEach((p, k) => p.classList.toggle('off', k !== i));
+        tabs.forEach((t, k) => t.setAttribute('aria-selected', k === i));
+        const on = tabs[i], strip = on.parentElement;
+        if (strip.scrollWidth > strip.clientWidth) strip.scrollTo({ left: on.offsetLeft - (strip.clientWidth - on.offsetWidth) / 2, behavior: 'smooth' });
+      };
+      const update = () => {
+        const p = Math.min(1, Math.max(0, (-pin.getBoundingClientRect().top + 96) / range));
+        set(Math.min(panes.length - 1, Math.floor(p * panes.length)));
+      };
+      tabs.forEach((t, i) => t.addEventListener('click', () => {
+        const top = pin.getBoundingClientRect().top + scrollY - 96;
+        scrollTo({ top: top + (i + .5) / panes.length * range, behavior: 'smooth' });
+      }));
+      size(); update();
+      addEventListener('scroll', update, { passive: true });
+      addEventListener('resize', () => { size(); update(); });
+      addEventListener('load', () => { size(); update(); });
+    }
   }
 })();

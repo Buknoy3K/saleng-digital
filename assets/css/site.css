@@ -344,6 +344,13 @@ a.row:hover .row-arrow, a.row.lit .row-arrow { transform: rotate(-45deg); opacit
   .row-arrow { width: 36px; height: 36px; grid-row: 1 / span 2; align-self: center; }
   .more { margin-top: 14px; }
 }
+/* services: scroll down and the cards slide sideways (JS adds .on) */
+.biz-pin.on .biz-stick { position: sticky; top: 96px; }
+.biz-pin.on .biz-track { display: flex; overflow: hidden; border-radius: 26px; margin-top: 20px; }
+.biz-pin.on .biz { flex: none; width: 100%; margin-top: 0; animation: none; transition: transform .7s var(--ease), opacity .5s; transform: translateX(calc(var(--i, 0) * -100%)); }
+.biz-pin.on .biz.off { opacity: .15; }
+.biz-pin.on .biz-tabs { margin-top: 0; }
+.biz-pin.on .biz-shot img { max-height: var(--shot-h, none); width: auto; max-width: 100%; margin-inline: auto; }
 .m-only { display: none; }
 /* ── phone type + spacing: tighter, so nothing feels wide or crowded ── */
 @media (max-width: 600px) {
@@ -362,11 +369,6 @@ a.row:hover .row-arrow, a.row.lit .row-arrow { transform: rotate(-45deg); opacit
   .hero-act .btn svg { width: 14px; height: 14px; }
   .m-hide { display: none; }
   .m-only { display: inline; }
-  /* less text on phones: keep headings and key lines, drop the supporting paragraphs */
-  .sec-h p, .biz-copy .lbl, .biz-built p, .more, .incl span, .area p, .chap-h .lbl span { display: none; }
-  .sec-h { border-bottom: 0; padding-bottom: 0; }
-  .step p { display: none; }
-  .step { padding: 18px 0; }
   .chapter + .chapter { margin-top: 96px; }
   .hero-lead { font-size: 18px; }
   .btn { font-size: 15px; }
