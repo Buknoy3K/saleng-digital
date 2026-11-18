@@ -344,6 +344,7 @@ a.row:hover .row-arrow, a.row.lit .row-arrow { transform: rotate(-45deg); opacit
   .row-arrow { width: 36px; height: 36px; grid-row: 1 / span 2; align-self: center; }
   .more { margin-top: 14px; }
 }
+.m-only { display: none; }
 /* ── phone type + spacing: tighter, so nothing feels wide or crowded ── */
 @media (max-width: 600px) {
   :root { --gut-l: max(18px, env(safe-area-inset-left, 0px)); --gut-r: max(18px, env(safe-area-inset-right, 0px)); }
@@ -356,12 +357,20 @@ a.row:hover .row-arrow, a.row.lit .row-arrow { transform: rotate(-45deg); opacit
   .hero-kicker { font-size: 30px; margin-bottom: 4px; }
   .hero-row { margin-top: 18px; gap: 10px; }
   .hero-row .lbl { font-size: 11px; letter-spacing: .1em; padding-top: 0; }
-  .hero-act { flex-direction: column; flex-wrap: nowrap; gap: 10px; margin-top: 8px; }
-  .hero-act .btn { justify-content: center; padding: 15px 20px; }
+  .hero-act { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
+  .hero-act .btn { justify-content: center; padding: 15px 10px; font-size: 14px; gap: 6px; white-space: nowrap; }
+  .hero-act .btn svg { width: 14px; height: 14px; }
+  .m-hide { display: none; }
+  .m-only { display: inline; }
+  /* less text on phones: keep headings and key lines, drop the supporting paragraphs */
+  .sec-h p, .biz-copy .lbl, .biz-built p, .more, .incl span, .area p, .chap-h .lbl span { display: none; }
+  .sec-h { border-bottom: 0; padding-bottom: 0; }
+  .step p { display: none; }
+  .step { padding: 18px 0; }
+  .chapter + .chapter { margin-top: 96px; }
   .hero-lead { font-size: 18px; }
   .btn { font-size: 15px; }
   .panel-in { padding-block: 48px 0; }
-  .chapter + .chapter { margin-top: 72px; }
   .chap-h { margin-bottom: 24px; gap: 10px; }
   .lbl { font-size: 11px; }
   .big-quote { font-size: 28px; max-width: none; }
