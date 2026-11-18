@@ -211,57 +211,39 @@
     });
   }
 
-  // ── services: business-type tabs (hash keeps the choice in the link) ──
+  // ── services: swipe carousel; rolls by itself once in view; tap a card for the problem and fix ──
   const tabs = [...document.querySelectorAll('.biz-tab')];
-  if (tabs.length) {
-    const panes = [...document.querySelectorAll('.biz')];
-    const show = id => {
-      if (!panes.some(p => p.id === id)) id = panes[0].id;
-      tabs.forEach(t => t.setAttribute('aria-selected', t.dataset.for === id));
-      // on a phone the tabs scroll sideways: keep the chosen one in view (without moving the page)
-      const on = tabs.find(t => t.dataset.for === id), strip = on && on.parentElement;
-      if (strip && strip.scrollWidth > strip.clientWidth) strip.scrollTo({ left: on.offsetLeft - (strip.clientWidth - on.offsetWidth) / 2, behavior: RM ? 'auto' : 'smooth' });
-      if (!document.querySelector('.biz-pin.on')) panes.forEach(p => p.hidden = p.id !== id);
+  const track = document.querySelector('.biz-track');
+  if (tabs.length && track) {
+    const panes = [...track.querySelectorAll('.biz')];
+    let auto = !RM, cur = 0;
+    const go = (i, smooth = true) => track.scrollTo({ left: i * (track.clientWidth + 16), behavior: smooth && !RM ? 'smooth' : 'auto' });
+    const mark = i => {
+      cur = i;
+      tabs.forEach((t, k) => t.setAttribute('aria-selected', k === i));
+      const on = tabs[i], strip = on.parentElement;
+      if (strip.scrollWidth > strip.clientWidth) strip.scrollTo({ left: on.offsetLeft - (strip.clientWidth - on.offsetWidth) / 2, behavior: RM ? 'auto' : 'smooth' });
     };
-    tabs.forEach(t => t.addEventListener('click', () => { history.replaceState(null, '', '#' + t.dataset.for); show(t.dataset.for); }));
-    tabs.forEach((t, i) => t.addEventListener('keydown', e => {
-      const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
-      if (d) { const n = tabs[(i + d + tabs.length) % tabs.length]; n.focus(); n.click(); }
+    const stop = () => { auto = false; };
+    track.addEventListener('scroll', () => { const i = Math.round(track.scrollLeft / (track.clientWidth + 16)); if (i !== cur) mark(Math.max(0, Math.min(panes.length - 1, i))); }, { passive: true });
+    ['pointerdown', 'wheel', 'keydown'].forEach(ev => track.addEventListener(ev, stop, { passive: true }));
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => { stop(); go(i); });
+      t.addEventListener('keydown', e => {
+        const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (d) { const n = tabs[(i + d + tabs.length) % tabs.length]; n.focus(); n.click(); }
+      });
+    });
+    panes.forEach(p => p.querySelector('.biz-open').addEventListener('click', e => {
+      stop(); const o = p.classList.toggle('open'); e.currentTarget.setAttribute('aria-expanded', o);
+      e.currentTarget.firstElementChild.textContent = o ? 'Hide' : 'See the problem & fix';
     }));
-    show(location.hash.slice(1));
-
-    // scroll-driven: the section pins and the cards slide sideways as you scroll (phone and PC)
-    const pin = document.querySelector('.biz-pin'), stick = pin && pin.querySelector('.biz-stick'), track = pin && pin.querySelector('.biz-track');
-    if (pin && !RM) {
-      pin.classList.add('on'); panes.forEach(p => p.hidden = false);
-      let cur = -1, range = 1;
-      const size = () => {
-        const vh = window.innerHeight;
-        track.style.setProperty('--shot-h', Math.max(160, vh - 520) + 'px');
-        pin.style.height = '';
-        range = Math.round(vh * .55) * (panes.length - 1);
-        pin.style.height = (stick.offsetHeight + range) + 'px';
-      };
-      const set = i => {
-        if (i === cur) return; cur = i;
-        track.style.setProperty('--i', i);
-        panes.forEach((p, k) => p.classList.toggle('off', k !== i));
-        tabs.forEach((t, k) => t.setAttribute('aria-selected', k === i));
-        const on = tabs[i], strip = on.parentElement;
-        if (strip.scrollWidth > strip.clientWidth) strip.scrollTo({ left: on.offsetLeft - (strip.clientWidth - on.offsetWidth) / 2, behavior: 'smooth' });
-      };
-      const update = () => {
-        const p = Math.min(1, Math.max(0, (-pin.getBoundingClientRect().top + 96) / range));
-        set(Math.min(panes.length - 1, Math.floor(p * panes.length)));
-      };
-      tabs.forEach((t, i) => t.addEventListener('click', () => {
-        const top = pin.getBoundingClientRect().top + scrollY - 96;
-        scrollTo({ top: top + (i + .5) / panes.length * range, behavior: 'smooth' });
-      }));
-      size(); update();
-      addEventListener('scroll', update, { passive: true });
-      addEventListener('resize', () => { size(); update(); });
-      addEventListener('load', () => { size(); update(); });
-    }
+    // roll while the carousel is on screen, until the visitor touches it
+    let seen = false;
+    new IntersectionObserver(es => { seen = es[0].isIntersecting; }, { threshold: .5 }).observe(track);
+    if (auto) setInterval(() => { if (auto && seen && !document.hidden) go((cur + 1) % panes.length); }, 4500);
+    const h = panes.findIndex(p => p.id === location.hash.slice(1));
+    if (h > 0) { go(h, false); mark(h); } else mark(0);
+    addEventListener('resize', () => go(cur, false));
   }
 })();

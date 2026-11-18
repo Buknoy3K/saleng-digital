@@ -344,13 +344,20 @@ a.row:hover .row-arrow, a.row.lit .row-arrow { transform: rotate(-45deg); opacit
   .row-arrow { width: 36px; height: 36px; grid-row: 1 / span 2; align-self: center; }
   .more { margin-top: 14px; }
 }
-/* services: scroll down and the cards slide sideways (JS adds .on) */
-.biz-pin.on .biz-stick { position: sticky; top: 96px; }
-.biz-pin.on .biz-track { display: flex; overflow: hidden; border-radius: 26px; margin-top: 20px; }
-.biz-pin.on .biz { flex: none; width: 100%; margin-top: 0; animation: none; transition: transform .7s var(--ease), opacity .5s; transform: translateX(calc(var(--i, 0) * -100%)); }
-.biz-pin.on .biz.off { opacity: .15; }
-.biz-pin.on .biz-tabs { margin-top: 0; }
-.biz-pin.on .biz-shot img { max-height: var(--shot-h, none); width: auto; max-width: 100%; margin-inline: auto; }
+/* services carousel: swipe sideways (or let it roll); tap a card to open the problem and fix */
+.biz-track { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-top: 20px; align-items: flex-start; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
+.biz-track::-webkit-scrollbar { display: none; }
+.biz-track .biz { flex: none; width: 100%; margin-top: 0; scroll-snap-align: start; animation: none; }
+.biz-cat { font-weight: 800; text-transform: uppercase; font-variation-settings: "wdth" 75; font-size: clamp(48px, 7vw, 104px); line-height: .85; letter-spacing: -.01em; }
+.biz-open { justify-self: start; display: inline-flex; align-items: center; gap: 10px; border: 1px solid var(--line); background: transparent; color: var(--soft); border-radius: 999px; padding: 10px 16px; font-size: 14px; font-weight: 500; transition: background .25s, color .25s; }
+.biz-open:hover { background: var(--fog); color: var(--night-2); }
+.biz-open i { font-style: normal; font-family: var(--mono); transition: transform .35s var(--ease); }
+.biz.open .biz-open i { transform: rotate(45deg); }
+.biz-more { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s var(--ease); }
+.biz.open .biz-more { grid-template-rows: 1fr; }
+.biz-more > div { overflow: hidden; min-height: 0; }
+.biz-more-in { display: grid; gap: 20px; padding-top: 4px; }
+.biz-more-in .lbl { display: none; }
 .m-only { display: none; }
 /* ── phone type + spacing: tighter, so nothing feels wide or crowded ── */
 @media (max-width: 600px) {
@@ -384,6 +391,8 @@ a.row:hover .row-arrow, a.row.lit .row-arrow { transform: rotate(-45deg); opacit
   .biz { margin-top: 20px; padding: 20px; gap: 22px; border-radius: 22px; }
   .biz-copy { gap: 14px; }
   .biz-pain { font-size: 25px; }
+  .biz-cat { font-size: 52px; }
+  .biz-more-in { gap: 14px; }
   .biz-built { padding-top: 14px; }
   .biz-built strong { font-size: 18px; }
   .sub + .sub { margin-top: 56px; }
