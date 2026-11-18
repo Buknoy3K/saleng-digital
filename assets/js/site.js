@@ -228,7 +228,7 @@
       target = Math.min(n - 1, i + g * g * (3 - 2 * g));
     };
     const draw = () => {
-      const W = items[0].offsetWidth, R = W * (innerWidth <= 760 ? .8 : 1);
+      const W = items[0].offsetWidth, R = W * (innerWidth <= 760 ? .8 : .85);
       items.forEach((el, i) => {
         let d = i - pos; d = ((d % n) + n * 1.5) % n - n / 2;
         const t = d * 2 * Math.PI / n, c = Math.cos(t), k = (c + 1) / 2;

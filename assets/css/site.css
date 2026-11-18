@@ -346,8 +346,8 @@ a.row:hover .row-arrow, a.row.lit .row-arrow { transform: rotate(-45deg); opacit
 }
 /* services: character-select stage. Devices stand on a turning ring; scrolling turns it (site.js) */
 .cs-pin { position: relative; margin-top: 12px; }
-.cs-stick { position: sticky; top: 76px; height: calc(100svh - 76px); min-height: 520px; display: flex; flex-direction: column; justify-content: center; gap: 18px; overflow: clip; margin-inline: calc(-1 * var(--gut-l)) calc(-1 * var(--gut-r)); }
-.cs-stage { --W: min(460px, 40vw); --H: min(400px, 48svh); position: relative; height: calc(var(--H) + 70px); perspective: 1500px; perspective-origin: 50% 20%; touch-action: pan-y; }
+.cs-stick { position: sticky; top: 76px; height: calc(100svh - 76px); min-height: 520px; display: flex; flex-direction: column; justify-content: center; gap: 8px; overflow: clip; margin-inline: calc(-1 * var(--gut-l)) calc(-1 * var(--gut-r)); }
+.cs-stage { --W: min(720px, 48vw); --H: min(540px, 60svh); position: relative; height: calc(var(--H) + 70px); perspective: 1500px; perspective-origin: 50% 20%; touch-action: pan-y; }
 .cs-floor { position: absolute; left: 50%; bottom: 8px; width: calc(var(--W) * 1.25); height: 80px; margin-left: calc(var(--W) * -.625); border-radius: 50%; border: 1px solid rgba(227, 164, 43, .45); background: radial-gradient(closest-side, rgba(227, 164, 43, .35), rgba(227, 164, 43, .06) 70%, transparent); box-shadow: 0 0 60px rgba(227, 164, 43, .18); }
 .cs-floor::after { content: ""; position: absolute; inset: 18%; border-radius: 50%; border: 1px dashed rgba(227, 164, 43, .35); }
 .cs-item { position: absolute; left: 50%; bottom: 46px; width: var(--W); height: var(--H); margin-left: calc(var(--W) / -2); display: flex; align-items: flex-end; justify-content: center; will-change: transform, opacity; -webkit-user-drag: none; }
