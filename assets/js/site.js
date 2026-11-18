@@ -211,39 +211,67 @@
     });
   }
 
-  // ── services: swipe carousel; rolls by itself once in view; tap a card for the problem and fix ──
-  const tabs = [...document.querySelectorAll('.biz-tab')];
-  const track = document.querySelector('.biz-track');
-  if (tabs.length && track) {
-    const panes = [...track.querySelectorAll('.biz')];
-    let auto = !RM, cur = 0;
-    const go = (i, smooth = true) => track.scrollTo({ left: i * (track.clientWidth + 16), behavior: smooth && !RM ? 'smooth' : 'auto' });
-    const mark = i => {
-      cur = i;
-      tabs.forEach((t, k) => t.setAttribute('aria-selected', k === i));
-      const on = tabs[i], strip = on.parentElement;
-      if (strip.scrollWidth > strip.clientWidth) strip.scrollTo({ left: on.offsetLeft - (strip.clientWidth - on.offsetWidth) / 2, behavior: RM ? 'auto' : 'smooth' });
+  // ── services: character-select stage. Scrolling down turns the ring of devices ──
+  const pin = document.querySelector('.cs-pin');
+  if (pin) {
+    const stick = pin.querySelector('.cs-stick'), stage = pin.querySelector('.cs-stage');
+    const items = [...pin.querySelectorAll('.cs-item')], n = items.length;
+    const nameA = pin.querySelector('.cs-name'), nameS = nameA.querySelector('span'), count = pin.querySelector('.cs-count');
+    const dots = [...pin.querySelectorAll('.cs-dots button')];
+    let range = 1, target = 0, pos = 0, active = -1, running = false;
+    const stickTop = () => parseFloat(getComputedStyle(stick).top) || 0;
+    const size = () => { range = Math.round(innerHeight * .7) * (n - 1); pin.style.height = (stick.offsetHeight + range) + 'px'; };
+    // scroll -> ring position; each device rests a moment in front before the ring turns on
+    const read = () => {
+      const p = Math.min(1, Math.max(0, (stickTop() - pin.getBoundingClientRect().top) / range));
+      const raw = p * (n - 1), i = Math.floor(raw), f = raw - i, g = Math.min(1, Math.max(0, (f - .2) / .6));
+      target = Math.min(n - 1, i + g * g * (3 - 2 * g));
     };
-    const stop = () => { auto = false; };
-    track.addEventListener('scroll', () => { const i = Math.round(track.scrollLeft / (track.clientWidth + 16)); if (i !== cur) mark(Math.max(0, Math.min(panes.length - 1, i))); }, { passive: true });
-    ['pointerdown', 'wheel', 'keydown'].forEach(ev => track.addEventListener(ev, stop, { passive: true }));
-    tabs.forEach((t, i) => {
-      t.addEventListener('click', () => { stop(); go(i); });
-      t.addEventListener('keydown', e => {
-        const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
-        if (d) { const n = tabs[(i + d + tabs.length) % tabs.length]; n.focus(); n.click(); }
+    const draw = () => {
+      const W = items[0].offsetWidth, R = W * (innerWidth <= 760 ? .8 : 1);
+      items.forEach((el, i) => {
+        let d = i - pos; d = ((d % n) + n * 1.5) % n - n / 2;
+        const t = d * 2 * Math.PI / n, c = Math.cos(t), k = (c + 1) / 2;
+        el.style.transform = `translate3d(${Math.sin(t) * R}px, 0, ${(c - 1) * R * 1.15}px) rotateY(${t * 28}deg)`;
+        el.style.zIndex = Math.round(k * 100);
+        el.style.opacity = (.25 + .75 * k * k).toFixed(3);
+        el.style.filter = `brightness(${(.35 + .65 * k).toFixed(3)})`;
       });
-    });
-    panes.forEach(p => p.querySelector('.biz-open').addEventListener('click', e => {
-      stop(); const o = p.classList.toggle('open'); e.currentTarget.setAttribute('aria-expanded', o);
-      e.currentTarget.firstElementChild.textContent = o ? 'Hide' : 'See the problem & fix';
-    }));
-    // roll while the carousel is on screen, until the visitor touches it
-    let seen = false;
-    new IntersectionObserver(es => { seen = es[0].isIntersecting; }, { threshold: .5 }).observe(track);
-    if (auto) setInterval(() => { if (auto && seen && !document.hidden) go((cur + 1) % panes.length); }, 4500);
-    const h = panes.findIndex(p => p.id === location.hash.slice(1));
-    if (h > 0) { go(h, false); mark(h); } else mark(0);
-    addEventListener('resize', () => go(cur, false));
+      const a = Math.round(pos) % n;
+      if (a !== active) {
+        active = a;
+        items.forEach((el, i) => { el.classList.toggle('is-mid', i === a); el.tabIndex = i === a ? 0 : -1; });
+        nameA.href = items[a].getAttribute('href');
+        nameS.textContent = items[a].dataset.name;
+        nameS.style.animation = 'none'; void nameS.offsetWidth; nameS.style.animation = '';
+        count.textContent = `0${a + 1} / 0${n}`;
+        dots.forEach((b, i) => b.setAttribute('aria-current', i === a));
+      }
+    };
+    const loop = () => {
+      pos = RM ? target : pos + (target - pos) * .12;
+      if (Math.abs(target - pos) < .001) pos = target;
+      draw();
+      running = pos !== target; if (running) requestAnimationFrame(loop);
+    };
+    const kick = () => { read(); if (!running) { running = true; requestAnimationFrame(loop); } };
+    const goTo = i => {
+      i = Math.max(0, Math.min(n - 1, i));
+      const top = pin.getBoundingClientRect().top + scrollY - stickTop();
+      scrollTo({ top: top + i / (n - 1) * range + 1, behavior: RM ? 'auto' : 'smooth' });
+    };
+    items.forEach((el, i) => el.addEventListener('click', e => { if (i !== active) { e.preventDefault(); goTo(i); } }));
+    dots.forEach((b, i) => b.addEventListener('click', () => goTo(i)));
+    pin.querySelector('.prev').addEventListener('click', () => goTo(active - 1));
+    pin.querySelector('.next').addEventListener('click', () => goTo(active + 1));
+    // a sideways swipe on the stage also turns it
+    let sx = null, swiped = false;
+    stage.addEventListener('pointerdown', e => { sx = e.clientX; swiped = false; });
+    stage.addEventListener('pointerup', e => { if (sx === null) return; const dx = e.clientX - sx; sx = null; if (Math.abs(dx) > 40) { swiped = true; goTo(active + (dx < 0 ? 1 : -1)); } });
+    stage.addEventListener('click', e => { if (swiped) { e.preventDefault(); e.stopPropagation(); swiped = false; } }, true);
+    addEventListener('scroll', kick, { passive: true });
+    addEventListener('resize', () => { size(); kick(); });
+    addEventListener('load', () => { size(); kick(); });
+    size(); read(); pos = target; draw();
   }
 })();
