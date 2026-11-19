@@ -122,6 +122,8 @@
       if (el.closest('.hero.small')) px = Math.min(px, innerHeight * .34);
       if (el.closest('.chapter')) px = Math.min(px, innerHeight * .3);
       el.style.fontSize = px + 'px';
+      // the font's optical size changes its width as the size changes, so measure again and correct
+      for (let n = 0; n < 3 && word.offsetWidth > avail; n++) { px *= avail / word.offsetWidth * .97; el.style.fontSize = px + 'px'; }
     });
   }
 

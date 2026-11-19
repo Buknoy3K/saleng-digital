@@ -159,8 +159,14 @@
       if (on) { card.classList.remove('open'); return; }
       const t = T[b.dataset.i]; b.setAttribute('aria-expanded', 'true');
       inn.innerHTML = `<div class="tD-who"><strong>${t.name}</strong><span>${t.role} · ${t.where}</span></div>${quote(t)}${link(t)}`;
-      const r = b.getBoundingClientRect(), cr = card.parentElement.getBoundingClientRect();
+      // phone: the stage is 2 across, so the quote opens right under the person's own row
+      const stage = b.parentElement, i = +b.dataset.i;
+      root.querySelector('.tD').appendChild(card); // park it first so the people's positions are clean
+      if (matchMedia('(max-width: 760px)').matches) stage.insertBefore(card, stage.children[(i | 1) + 1] || null);
+      const r = b.getBoundingClientRect(), cr = card.getBoundingClientRect();
       notch.style.left = (r.left + r.width / 2 - cr.left) + 'px';
       card.classList.add('open');
     }));
+  let lastW = innerWidth;
+  addEventListener('resize', () => { if (innerWidth === lastW) return; lastW = innerWidth; card.classList.remove('open'); ps.forEach(p => p.setAttribute('aria-expanded', 'false')); });
 })();
