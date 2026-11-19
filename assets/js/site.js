@@ -7,7 +7,7 @@
   const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const arrow = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   // One long home page: each menu item scrolls to its section (case pages link back into it).
-  const pages = [['home', 'Home', 'index.html#top'], ['services', 'Services', 'index.html#services'], ['work', 'Work', 'index.html#work'], ['pricing', 'Pricing', 'index.html#pricing'], ['about', 'About', 'index.html#about'], ['contact', 'Contact', 'index.html#contact']];
+  const pages = [['home', 'Home', 'index.html#top'], ['services', 'Services', 'index.html#services'], ['work', 'Work', 'index.html#work'], ['pricing', 'Pricing', 'index.html#pricing'], ['about', 'Clients', 'index.html#about'], ['contact', 'Contact', 'index.html#contact']];
   const cur = id => id === page ? ' aria-current="page"' : '';
   const contact = `${root}index.html#contact`;
   document.querySelectorAll('i[data-arrow]').forEach(i => i.outerHTML = arrow);
@@ -67,7 +67,7 @@
     const foot = document.createElement('footer');
     foot.className = 'foot';
     foot.innerHTML = `<div><a class="wm" href="${root}index.html">saleng<b>*</b>digital</a>
-        <p style="margin-top:12px;max-width:34ch">Simple systems for the businesses and offices of La Trinidad and Baguio. Built here. Priced for here. Supported here.</p></div>
+        <p style="margin-top:12px;max-width:34ch">Custom systems and automation for businesses and offices, built around the way they already work.</p></div>
       <div><h4>Sections</h4><ul>${pages.slice(0, 3).map(([, n, h]) => `<li><a href="${root}${h}">${n}</a></li>`).join('')}</ul></div>
       <div><h4>&nbsp;</h4><ul>${pages.slice(3).map(([, n, h]) => `<li><a href="${root}${h}">${n}</a></li>`).join('')}</ul></div>
       <div><h4>Call us</h4><ul><li><span data-c="phone"></span></li><li><a data-mail data-c="email" href="#"></a></li><li>La Trinidad &amp; Baguio, Benguet</li></ul></div>
@@ -209,69 +209,5 @@
       r.addEventListener('pointermove', e => { tx = e.clientX + 40; ty = e.clientY; });
       r.addEventListener('pointerleave', () => { on = false; peek.classList.remove('on'); });
     });
-  }
-
-  // ── services: character-select stage. Scrolling down turns the ring of devices ──
-  const pin = document.querySelector('.cs-pin');
-  if (pin) {
-    const stick = pin.querySelector('.cs-stick'), stage = pin.querySelector('.cs-stage');
-    const items = [...pin.querySelectorAll('.cs-item')], n = items.length;
-    const nameA = pin.querySelector('.cs-name'), nameS = nameA.querySelector('span'), count = pin.querySelector('.cs-count');
-    const dots = [...pin.querySelectorAll('.cs-dots button')];
-    let range = 1, target = 0, pos = 0, active = -1, running = false;
-    const stickTop = () => parseFloat(getComputedStyle(stick).top) || 0;
-    const size = () => { range = Math.round(innerHeight * .7) * (n - 1); pin.style.height = (stick.offsetHeight + range) + 'px'; };
-    // scroll -> ring position; each device rests a moment in front before the ring turns on
-    const read = () => {
-      const p = Math.min(1, Math.max(0, (stickTop() - pin.getBoundingClientRect().top) / range));
-      const raw = p * (n - 1), i = Math.floor(raw), f = raw - i, g = Math.min(1, Math.max(0, (f - .2) / .6));
-      target = Math.min(n - 1, i + g * g * (3 - 2 * g));
-    };
-    const draw = () => {
-      const W = items[0].offsetWidth, R = W * (innerWidth <= 760 ? .8 : .85);
-      items.forEach((el, i) => {
-        let d = i - pos; d = ((d % n) + n * 1.5) % n - n / 2;
-        const t = d * 2 * Math.PI / n, c = Math.cos(t), k = (c + 1) / 2;
-        el.style.transform = `translate3d(${Math.sin(t) * R}px, 0, ${(c - 1) * R * 1.15}px) rotateY(${t * 28}deg)`;
-        el.style.zIndex = Math.round(k * 100);
-        el.style.opacity = (.25 + .75 * k * k).toFixed(3);
-        el.firstElementChild.style.filter = `brightness(${(.35 + .65 * k).toFixed(3)})`;
-      });
-      const a = Math.round(pos) % n;
-      if (a !== active) {
-        active = a;
-        items.forEach((el, i) => { el.classList.toggle('is-mid', i === a); el.tabIndex = i === a ? 0 : -1; });
-        nameA.href = items[a].getAttribute('href');
-        nameS.textContent = items[a].dataset.name;
-        nameS.style.animation = 'none'; void nameS.offsetWidth; nameS.style.animation = '';
-        count.textContent = `0${a + 1} / 0${n}`;
-        dots.forEach((b, i) => b.setAttribute('aria-current', i === a));
-      }
-    };
-    const loop = () => {
-      pos = RM ? target : pos + (target - pos) * .12;
-      if (Math.abs(target - pos) < .001) pos = target;
-      draw();
-      running = pos !== target; if (running) requestAnimationFrame(loop);
-    };
-    const kick = () => { read(); if (!running) { running = true; requestAnimationFrame(loop); } };
-    const goTo = i => {
-      i = Math.max(0, Math.min(n - 1, i));
-      const top = pin.getBoundingClientRect().top + scrollY - stickTop();
-      scrollTo({ top: top + i / (n - 1) * range + 1, behavior: RM ? 'auto' : 'smooth' });
-    };
-    items.forEach((el, i) => el.addEventListener('click', e => { if (i !== active) { e.preventDefault(); goTo(i); } }));
-    dots.forEach((b, i) => b.addEventListener('click', () => goTo(i)));
-    pin.querySelector('.prev').addEventListener('click', () => goTo(active - 1));
-    pin.querySelector('.next').addEventListener('click', () => goTo(active + 1));
-    // a sideways swipe on the stage also turns it
-    let sx = null, swiped = false;
-    stage.addEventListener('pointerdown', e => { sx = e.clientX; swiped = false; });
-    stage.addEventListener('pointerup', e => { if (sx === null) return; const dx = e.clientX - sx; sx = null; if (Math.abs(dx) > 40) { swiped = true; goTo(active + (dx < 0 ? 1 : -1)); } });
-    stage.addEventListener('click', e => { if (swiped) { e.preventDefault(); e.stopPropagation(); swiped = false; } }, true);
-    addEventListener('scroll', kick, { passive: true });
-    addEventListener('resize', () => { size(); kick(); });
-    addEventListener('load', () => { size(); kick(); });
-    size(); read(); pos = target; draw();
   }
 })();

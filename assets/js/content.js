@@ -19,8 +19,6 @@ window.CONTENT = {
   bonfire: 'By quote',
   care: '₱400',
 
-  // How far we are from clients
-  supportDistance: '15 minutes',
 
   // About · our own survey
   surveyCount: '17',
