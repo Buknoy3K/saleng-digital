@@ -11,7 +11,7 @@
 <meta name="theme-color" content="#0F2A1D">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%230F2A1D'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23C9A227'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&display=swap">
 <style>
 :root{
   --forest:#0F2A1D;--green:#1F4D36;--gold:#C9A227;--gold-text:#7A5C00;--cream:#F6F3EA;--ink:#0E1411;--sage:#A9B8AE;--moss:#4A5A50;
@@ -20,7 +20,9 @@
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--forest);color:var(--cream);font:400 1.125rem/1.5 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;overflow-x:clip}
+/* PC: everything drawn at 67%, so the whole first screen fits without browser zoom */
+@media (min-width:1024px){html{zoom:.67}}
+body{margin:0;background:var(--forest);color:var(--cream);font:400 1.125rem/1.5 "Bricolage Grotesque",system-ui,sans-serif;font-optical-sizing:auto;-webkit-font-smoothing:antialiased;overflow-x:hidden;overflow-x:clip}
 img{display:block;max-width:100%;height:auto}
 a{color:inherit}
 h1,h2,h3,p{margin:0}
@@ -134,7 +136,7 @@ h1,h2,h3,p{margin:0}
 
 /* types: real 3D models from the live site (biz.js), each tile opens that business's page */
 .types,[data-tm]{--night:#12301f;--night-2:#0b1b12;--fog:#f0ece0;--soft:#c3c8bd;--mute:#8d9488;--resin:#e3a42b;--bark:#5a3a1c;--mono:ui-monospace,Consolas,monospace}
-.types{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:48px}
+.types{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:48px}
 .type{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px 12px 24px;border-radius:24px;background:var(--night);text-decoration:none;color:var(--cream);transition:background .35s}
 .type:hover{background:var(--green)}
 .type .live{order:-1;display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;background:rgba(227,164,43,.14);color:var(--resin);font-size:.9rem;font-weight:600}
@@ -146,6 +148,10 @@ h1,h2,h3,p{margin:0}
 .type:hover .iso{transform:translateY(-8px) scale(1.05)}
 .type strong{font-size:clamp(1.05rem,2vw,1.4rem);font-weight:700;line-height:1.2;letter-spacing:-.015em}
 @media (min-width:900px){.types{grid-template-columns:repeat(3,minmax(0,1fr))}}
+/* phones: 3 per row (2 rows), compact */
+@media (max-width:899px){.types{gap:8px}.type{padding:10px 4px 14px;border-radius:18px}.type .live{font-size:.7rem;padding:3px 8px}.type strong{font-size:.9rem!important;text-align:center;line-height:1.15}.type:not(:has(.live)) .m{margin-top:25px}}
+/* PC: all six business types in one row (a bit wider than the page column), names on one line */
+@media (min-width:1024px){.types{grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-inline:-150px}.type{padding:14px 8px 20px;border-radius:22px}.type .m{width:min(100%,210px)}.type strong{font-size:1.2rem!important;white-space:nowrap;letter-spacing:-.015em}.type:not(:has(.live)) .m{margin-top:34px}}
 @media (prefers-reduced-motion:reduce){.type .iso{transition:none}.type .live i{animation:none}}
 
 /* testimonials: the 3D people (clients.js), tap one to open their words */
@@ -231,6 +237,27 @@ h1,h2,h3,p{margin:0}
 .js .bar:not(.show){transform:translateY(110%)}
 @media (min-width:768px){.bar{display:none}}
 @media (max-width:767px){body{padding-bottom:76px}}
+
+/* ───────── type: Workshop (Bricolage Grotesque, narrowed headings) ───────── */
+.hero h1,.title,.bstep b,.bstep h3,.price strong,[data-tm] .q-pull{font-weight:700;font-stretch:80%}
+.hero h1{font-size:clamp(3.2rem,10.5vw,8.75rem);line-height:.92;letter-spacing:-.022em;max-width:11ch}
+.title{font-size:clamp(3rem,9.5vw,7.75rem);line-height:.92;letter-spacing:-.022em;margin-top:14px;text-wrap:balance}
+.who{font-weight:700;font-size:clamp(1.25rem,2.2vw,1.625rem);font-stretch:80%;letter-spacing:-.005em;line-height:1.1}
+.hero .who{margin-bottom:clamp(18px,2.4vw,28px)}
+.line{font-size:clamp(1.2rem,2.4vw,1.55rem);margin-top:20px;line-height:1.3;letter-spacing:-.01em}
+.more{font-weight:600}
+.logo{font-weight:800;font-stretch:85%;font-size:1.25rem;letter-spacing:-.02em}
+.btn{font-weight:600;font-size:1.125rem;letter-spacing:-.01em}
+.type strong{font-weight:700;font-stretch:85%;font-size:clamp(1.25rem,2.4vw,1.75rem);letter-spacing:-.02em;line-height:1.05}
+.bstep b{font-size:clamp(5rem,13vw,9.5rem);letter-spacing:-.03em;line-height:.85}
+.bstep h3{font-size:clamp(1.9rem,4vw,2.75rem);letter-spacing:-.03em;margin-top:8px}
+.price h3{font-weight:700;font-size:1.5rem;letter-spacing:-.02em}
+.price strong{font-size:clamp(3.2rem,7.4vw,5rem);letter-spacing:-.025em;line-height:.95}
+[data-tm] .q-pull{font-size:clamp(1.75rem,3vw,2.6rem)!important;letter-spacing:-.03em;line-height:1!important}
+.tm-link.wip,.tD-h{font-family:inherit;text-transform:none;letter-spacing:0;font-size:.9375rem;font-weight:600}
+.sec{padding-block:clamp(88px,13vw,180px)}
+/* PC: each product panel fits the screen and stops at the top edge (heading stays visible) */
+@media (min-width:1024px){.stack > .sec{padding-block:56px}}
 </style>
 </head>
 <body>
@@ -242,7 +269,7 @@ h1,h2,h3,p{margin:0}
 
 <header class="top"><div class="wrap">
   <a class="logo" href="#top"><i></i>Saleng Digital</a>
-  <a class="btn gold" href="https://m.me/winiieee"><svg><use href="#i-msg"/></svg>Message us</a>
+  <a class="btn line-b" href="#work">See our work</a>
 </div></header>
 
 <main id="top">
@@ -414,10 +441,11 @@ h1,h2,h3,p{margin:0}
 <script src="assets/js/biz.js?v=9"></script>
 <script src="assets/js/clients.js?v=3"></script>
 <script>
-// Products stack: a panel taller than the screen scrolls until its bottom shows, then the next one slides over it.
+// Products stack: on PC every panel stops at the top edge; on phones a panel taller than the screen scrolls until its bottom shows, then the next one slides over it.
 (() => {
   const panels = [...document.querySelectorAll('[data-stack] > .sec')];
-  const set = () => panels.forEach(p => { p.style.top = Math.min(0, innerHeight - p.offsetHeight) + 'px'; });
+  // zoom-safe: measure on screen, then convert back to the panel's own CSS pixels
+  const set = () => panels.forEach(p => { if (innerWidth >= 1024) { p.style.top = '0px'; return; } const h = p.getBoundingClientRect().height, z = h / p.offsetHeight || 1; p.style.top = Math.min(0, (innerHeight - h) / z) + 'px'; });
   addEventListener('resize', set); addEventListener('load', set); set();
   if (window.ResizeObserver) { const ro = new ResizeObserver(set); panels.forEach(p => ro.observe(p)); }
 })();
