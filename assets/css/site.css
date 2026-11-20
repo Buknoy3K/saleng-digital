@@ -473,8 +473,9 @@ a.row:hover .row-arrow, a.row.lit .row-arrow { transform: rotate(-45deg); opacit
 @media (max-width: 900px) {
   .bp-build, .bp-empty, .bp-near { grid-template-columns: 1fr; }
   .bp-ideas { grid-template-columns: 1fr 1fr; }
-  .bp-model { margin-left: 0; width: min(280px, 64vw); }
+  .bp-model { margin: 0 auto; width: min(230px, 56vw); }
 }
+@media (max-width: 760px) { .hero-row:has(.bp-model) { margin-top: 4px; } .hero-row:has(.bp-model) .lbl { text-align: center; } }
 
 /* ── screenshot collages on the case pages ── */
 .gal { margin-top: clamp(56px, 7vw, 100px); }

@@ -281,6 +281,8 @@ h1,h2,h3,p{margin:0}
 .sec{padding-block:clamp(88px,13vw,180px)}
 /* PC: each product panel fits the screen and stops at the top edge (heading stays visible) */
 @media (min-width:1024px){.stack > .sec{padding-block:56px}}
+.stack > .sec[class*="p-"]{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center}
+.stack > .sec[class*="p-"] > .wrap{width:100%}
 </style>
 </head>
 <body>
@@ -475,6 +477,11 @@ h1,h2,h3,p{margin:0}
   <a class="btn gold" href="https://m.me/winiieee"><svg><use href="#i-msg"/></svg>Message us</a>
   <a class="btn line-b" href="tel:+639074097035" aria-label="Call 0907 409 7035"><svg><use href="#i-call"/></svg>Call</a>
 </nav>
+<script>
+// every product panel gets the height of the tallest one
+(function(){var q='.stack > .sec[class*="p-"]';function eq(){var a=[].slice.call(document.querySelectorAll(q));a.forEach(function(e){e.style.minHeight=''});var m=Math.max.apply(null,a.map(function(e){return e.offsetHeight}));a.forEach(function(e){e.style.minHeight=m+'px'})}
+addEventListener('load',eq);addEventListener('resize',eq);if(document.fonts)document.fonts.ready.then(eq)})();
+</script>
 <script src="assets/js/showcase.js"></script>
 <script src="assets/js/biz.js?v=10"></script>
 <script src="assets/js/clients.js?v=4"></script>
