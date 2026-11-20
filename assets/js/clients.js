@@ -20,7 +20,7 @@
       body: ['As an accountant, every client has different needs. Some need help with BIR, some with business permits and registration, and some with monthly bookkeeping. It\'s really hard to keep track of everything, especially when you have many clients.',
         'This system helps me see what is happening with each client: their payments, billings and all the records. I can also check which work is already finished and what still needs my attention.',
         'Now I don\'t have to open many files just to find one piece of information. <b>Everything is already there.</b> Big help for my everyday work!'] },
-    { k: 'coop', name: 'Fresh Crops Cooperative', role: 'Board member, Fresh Crops Coop', where: 'La Trinidad, Benguet', url: '',
+    { k: 'coop', name: 'Fresh Crops Cooperative', role: 'Board member, Fresh Crops Coop', where: 'La Trinidad, Benguet', url: 'work/fresh-crops.html',
       pull: 'A big improvement in how we manage our daily operations.',
       body: ['Managing a cooperative comes with a lot of responsibilities. We handle member records, savings, loans, payments, share capital, and many other things that need to be monitored regularly.',
         'Having our own coop management system makes things much easier. We can now manage member information, monitor transactions, track loans and payments, and generate reports <b>all in one place</b>.',

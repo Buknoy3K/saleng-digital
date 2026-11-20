@@ -137,12 +137,12 @@
         k ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
       }
       const late = i % 3 === 0;
-      ctx.strokeStyle = late ? 'rgba(90,58,28,.42)' : 'rgba(138,90,43,.24)';
-      ctx.lineWidth = late ? 2.2 : 1;
+      ctx.strokeStyle = late ? 'rgba(90,58,28,.17)' : 'rgba(138,90,43,.09)';
+      ctx.lineWidth = late ? 1.6 : 1;
       ctx.stroke();
     }
     const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, sp * 3);
-    g.addColorStop(0, 'rgba(209,42,56,.32)'); g.addColorStop(1, 'rgba(209,42,56,0)');
+    g.addColorStop(0, 'rgba(209,42,56,.16)'); g.addColorStop(1, 'rgba(209,42,56,0)');
     ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, sp * 3, 0, 6.283); ctx.fill();
   }
   let visible = true;

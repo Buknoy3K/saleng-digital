@@ -12,7 +12,7 @@
     ccdc:    { kind: "Registrar's office", name: 'CCDC Document Generator', what: "Registrar's office documents", res: '10 to 30 minutes per document. Now seconds.', img: 'assets/img/docgen.webp', url: 'work/ccdc.html', where: 'La Trinidad, Benguet' },
     garcia:  { kind: 'Accounting firm', name: 'Garcia Accounting Tracker', what: 'BIR deadline tracker', res: "Every client's BIR deadlines in one place.", img: 'assets/img/garcia.webp', url: 'work/garcia.html', where: 'La Trinidad, Benguet' },
     vo:      { kind: 'Developer', name: 'Virtual Office', what: 'AI agents at their desks', res: 'Every job started, stored and tracked in one place.', img: 'assets/img/vo-office.webp', url: 'work/virtual-office.html', where: 'Baguio City, Benguet' },
-    coop:    { kind: 'Cooperative', name: 'Cooperative system', what: 'For an agricultural cooperative', res: 'In progress now.', where: 'La Trinidad, Benguet', wip: true },
+    coop:    { kind: 'Cooperative', name: 'Fresh Crops Coop System', what: 'Members, savings, loans and reports', res: 'The whole co-op on one screen.', img: 'assets/img/coop-dash.webp', url: 'work/fresh-crops.html', where: 'La Trinidad, Benguet' },
   };
 
   // ── the 6 business types: description, builds made for it, closest builds when there are none, ideas ──
