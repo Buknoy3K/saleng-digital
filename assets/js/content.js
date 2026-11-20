@@ -25,5 +25,5 @@ window.CONTENT = {
   surveyTotal: '20',
 
   // Work · Garcia Accounting's result (placeholder wording by Wayne's OK, replace with a real result when known)
-  garciaResult: 'Every deadline in one place. Nothing missed, no more lost profit.',
+  garciaResult: 'Nothing missed.',
 };

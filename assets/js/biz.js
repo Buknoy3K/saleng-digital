@@ -7,12 +7,12 @@
 
   // ── our real builds ──
   const BUILDS = {
-    snack:   { name: 'Snack Stop POS', what: 'POS + live owner view on her phone', res: 'She sees every sale as it happens, 9 km away.', img: 'assets/img/pos.webp', url: 'work/doc-rena.html', where: 'La Trinidad, Benguet' },
-    laundry: { name: 'ACA Laundry Kiosk', what: 'Customer and order kiosk', res: 'No more lost clothes. Every sale tracked.', img: 'assets/img/kiosk-orders.webp', url: 'work/auntie-analyn.html', where: 'La Trinidad, Benguet' },
-    ccdc:    { name: 'CCDC Document Generator', what: "Registrar's office documents", res: '10 to 30 minutes per document. Now seconds.', img: 'assets/img/docgen.webp', url: 'work/ccdc.html', where: 'La Trinidad, Benguet' },
-    garcia:  { name: 'Garcia Accounting Tracker', what: 'BIR deadline tracker', res: "Every client's BIR deadlines in one place.", img: 'assets/img/garcia.webp', url: 'work/garcia.html', where: 'La Trinidad, Benguet' },
-    vo:      { name: 'Virtual Office', what: 'AI agents at their desks', res: 'Every job started, stored and tracked in one place.', img: 'assets/img/vo-office.webp', url: 'work/virtual-office.html', where: 'Baguio City, Benguet' },
-    coop:    { name: 'Cooperative system', what: 'For an agricultural cooperative', res: 'In progress now.', where: 'La Trinidad, Benguet', wip: true },
+    snack:   { kind: 'Snack stop', name: 'Snack Stop POS', what: 'POS + live owner view on her phone', res: 'She sees every sale as it happens, 9 km away.', img: 'assets/img/pos.webp', url: 'work/doc-rena.html', where: 'La Trinidad, Benguet' },
+    laundry: { kind: 'Laundry shop', name: 'ACA Laundry Kiosk', what: 'Customer and order kiosk', res: 'No more lost clothes. Every sale tracked.', img: 'assets/img/kiosk-orders.webp', url: 'work/auntie-analyn.html', where: 'La Trinidad, Benguet' },
+    ccdc:    { kind: "Registrar's office", name: 'CCDC Document Generator', what: "Registrar's office documents", res: '10 to 30 minutes per document. Now seconds.', img: 'assets/img/docgen.webp', url: 'work/ccdc.html', where: 'La Trinidad, Benguet' },
+    garcia:  { kind: 'Accounting firm', name: 'Garcia Accounting Tracker', what: 'BIR deadline tracker', res: "Every client's BIR deadlines in one place.", img: 'assets/img/garcia.webp', url: 'work/garcia.html', where: 'La Trinidad, Benguet' },
+    vo:      { kind: 'Developer', name: 'Virtual Office', what: 'AI agents at their desks', res: 'Every job started, stored and tracked in one place.', img: 'assets/img/vo-office.webp', url: 'work/virtual-office.html', where: 'Baguio City, Benguet' },
+    coop:    { kind: 'Cooperative', name: 'Cooperative system', what: 'For an agricultural cooperative', res: 'In progress now.', where: 'La Trinidad, Benguet', wip: true },
   };
 
   // ── the 6 business types: description, builds made for it, closest builds when there are none, ideas ──
@@ -193,22 +193,22 @@
     const c = CATS.find(x => x.id === want) || CATS[CATS.length - 1];
     const $ = id => document.getElementById(id);
     document.title = c.name + ' · Saleng Digital';
-    const card = k => {
+    const row = k => {
       const b = BUILDS[k];
       return b.wip
-        ? `<div class="bp-build wip"><div class="t"><span class="lbl">In progress · ${b.where}</span><h3>${b.name}</h3><p class="res">${b.what}. ${b.res}</p></div></div>`
-        : `<a class="bp-build" href="${b.url}"><figure><img src="${b.img}" alt="${b.name} screenshot, demo data" loading="lazy"></figure><div class="t"><span class="lbl">${b.what} · ${b.where}</span><h3>${b.name}</h3><p class="res">${b.res}</p><span class="link">Read the full story <i data-arrow></i></span></div></a>`;
+        ? `<li><div class="row wip"><span class="row-name">${b.name}</span><span class="row-what">${b.kind} · ${b.where}</span><span class="row-res">In progress.</span><span class="row-arrow"><i data-arrow></i></span></div></li>`
+        : `<li><a class="row" href="${b.url}" data-peek="${b.img}"><span class="row-name">${b.name}</span><span class="row-what">${b.kind} · ${b.where}</span><span class="row-res">${b.res}</span><span class="row-arrow"><i data-arrow></i></span></a></li>`;
     };
+    const rows = ks => `<ul class="rows" style="border-top:0">${ks.map(row).join('')}</ul>`;
     $('bpName').innerHTML = `<span>${c.short}</span>`;
     $('bpLead').textContent = c.name;
     mount($('bpModel'), c.id);
-    $('bpEx').innerHTML = c.ex.map(e => `<span>${e}</span>`).join('');
     $('bpBuilt').innerHTML = c.builds.length
-      ? `<h2 class="bp-h">What we've built for <span>${c.name.toLowerCase()}</span></h2><div class="bp-builds">${c.builds.map(card).join('')}</div>`
-      : `<h2 class="bp-h">${c.id === 'other' ? 'Tell us <span>what you run</span>' : `Nothing built for <span>${c.name.toLowerCase()}</span> yet`}</h2>
-         <div class="bp-empty"><p>${c.id === 'other' ? "Every system we've made started with an owner explaining their day. Yours can too." : "You could be the first. These are the closest things we've built, and they work the same way."}</p><a class="btn amber" href="index.html#contact">Book a free audit <i data-arrow></i></a></div>
-         <div class="bp-near">${c.near.map(card).join('')}</div>`;
+      ? `<h2 class="bp-h">Built <span>for you</span></h2>${rows(c.builds)}`
+      : `<h2 class="bp-h">${c.id === 'other' ? 'Tell us <span>what you run</span>' : 'Not built <span>yet</span>'}</h2>
+         <div class="bp-empty"><p>${c.id === 'other' ? 'Your day, our build.' : 'You could be the first.'}</p><a class="btn amber" href="index.html#contact">Book a free audit <i data-arrow></i></a></div>
+         ${c.near.length ? rows(c.near) : ''}`;
     $('bpIdeas').innerHTML = c.ideas.map(t => `<li>${t}</li>`).join('');
-    $('bpOthers').innerHTML = CATS.filter(x => x.id !== c.id).map(x => `<a href="business.html?type=${x.id}">${icon(x.id)}${x.name}</a>`).join('');
+    $('bpOthers').innerHTML = CATS.filter(x => x.id !== c.id).map(x => `<a href="business.html?type=${x.id}">${icon(x.id)}${x.short}</a>`).join('');
   }
 })();

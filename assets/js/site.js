@@ -61,20 +61,6 @@
     addEventListener('scroll', spy, { passive: true }); spy();
   }
 
-  // ── footer ──
-  const panelIn = document.querySelector('.panel .in');
-  if (panelIn) {
-    const foot = document.createElement('footer');
-    foot.className = 'foot';
-    foot.innerHTML = `<div><a class="wm" href="${root}index.html">saleng<b>*</b>digital</a>
-        <p style="margin-top:12px;max-width:34ch">Custom systems and automation for businesses and offices, built around the way they already work.</p></div>
-      <div><h4>Sections</h4><ul>${pages.slice(0, 3).map(([, n, h]) => `<li><a href="${root}${h}">${n}</a></li>`).join('')}</ul></div>
-      <div><h4>&nbsp;</h4><ul>${pages.slice(3).map(([, n, h]) => `<li><a href="${root}${h}">${n}</a></li>`).join('')}</ul></div>
-      <div><h4>Call us</h4><ul><li><span data-c="phone"></span></li><li><a data-mail data-c="email" href="#"></a></li><li>La Trinidad &amp; Baguio, Benguet</li></ul></div>
-      <div class="foot-base"><span>© ${new Date().getFullYear()} Saleng Digital</span><span>Limitless La Trinidad</span></div>`;
-    panelIn.append(foot);
-  }
-
   // ── content.js values ──
   document.querySelectorAll('[data-c]').forEach(el => {
     const v = C[el.dataset.c];

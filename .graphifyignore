@@ -1,0 +1,6 @@
+﻿graphify-out/
+node_modules/
+*.min.js
+dist/
+build/
+_backup*/
