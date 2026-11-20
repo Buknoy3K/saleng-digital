@@ -75,9 +75,15 @@ h1,h2,h3,p{margin:0}
 .monitor .neck{width:13%;height:clamp(34px,7vw,96px);margin:clamp(4px,.6vw,8px) auto 0;background:linear-gradient(90deg,#8d928e,#dfe2de 45%,#9a9f9b)}
 .monitor .foot{width:32%;height:clamp(6px,1vw,12px);margin:0 auto;padding:0;border:0;border-radius:6px 6px 3px 3px;background:linear-gradient(#e2e5e1,#9fa49f);box-shadow:0 30px 40px -20px rgba(0,0,0,.6)}
 
-.kiosk .scr{border-radius:clamp(6px,1vw,12px);aspect-ratio:2/3;box-shadow:0 0 0 clamp(4px,.75vw,10px) var(--body),var(--edge),0 50px 80px -40px rgba(0,0,0,.6)}
-.kiosk .neck{width:12%;height:clamp(50px,10vw,130px);margin:clamp(5px,.9vw,11px) auto 0;background:linear-gradient(90deg,#1b201d,#3a403c 45%,#1b201d)}
-.kiosk .foot{width:46%;height:clamp(8px,1.4vw,16px);margin:0 auto;border-radius:50%/100% 100% 0 0;background:linear-gradient(#3a403c,#121614)}
+.kiosk{position:relative}
+.kiosk .cab{background:linear-gradient(90deg,#161a18,#2c312e 50%,#161a18);border-radius:clamp(8px,1.3vw,14px) clamp(8px,1.3vw,14px) clamp(3px,.5vw,6px) clamp(3px,.5vw,6px);padding:clamp(5px,.9vw,10px) clamp(5px,.9vw,10px) 0;box-shadow:var(--edge),0 40px 60px -30px rgba(0,0,0,.6)}
+.kiosk .sign{background:#F6CAD7;color:#3a1a24;font:700 clamp(.42rem,.8vw,.68rem)/1 var(--mono);letter-spacing:.18em;text-align:center;padding:clamp(3px,.5vw,6px) 0;border-radius:3px 3px 0 0;text-transform:uppercase}
+.kiosk .scr{aspect-ratio:2/3;border-radius:0 0 clamp(3px,.5vw,6px) clamp(3px,.5vw,6px);box-shadow:0 0 0 1px #000}
+.kiosk .chin{height:clamp(22px,4vw,48px);display:flex;align-items:center;justify-content:space-between;padding:0 8%}
+.kiosk .chin::before{content:"";width:46%;height:clamp(3px,.5vw,6px);border-radius:3px;background:#050605;box-shadow:0 1px 0 #444}
+.kiosk .chin::after{content:"";width:clamp(7px,1.2vw,14px);aspect-ratio:1;border-radius:50%;background:#7ee2a2;box-shadow:0 0 8px 1px rgba(126,226,162,.6)}
+.kiosk .post{width:22%;height:clamp(40px,7vw,90px);margin:0 auto;background:linear-gradient(90deg,#161a18,#3a403c 45%,#161a18);box-shadow:var(--edge)}
+.kiosk .plate{width:62%;height:clamp(7px,1.2vw,14px);margin:0 auto;border-radius:4px 4px 2px 2px;background:linear-gradient(#3a403c,#121614);box-shadow:var(--edge),0 24px 30px -14px rgba(0,0,0,.6)}
 
 .paper{background:#fff;padding:clamp(4px,.8vw,10px);border-radius:3px;box-shadow:0 30px 50px -24px rgba(0,0,0,.55)}
 .sms{background:#fff;color:#111;border-radius:18px 18px 18px 4px;padding:clamp(8px,1.4vw,16px) clamp(10px,1.8vw,20px);font-size:clamp(.7rem,1.5vw,1.05rem);line-height:1.3;text-align:left;box-shadow:0 30px 50px -24px rgba(0,0,0,.5)}
@@ -91,8 +97,8 @@ h1,h2,h3,p{margin:0}
 .c-pos .tablet{width:80%;transform:rotateY(-9deg)}
 .c-pos .phone{position:absolute;width:21%;right:2%;bottom:-12%;transform:translateZ(120px) rotateY(-16deg)}
 .c-kiosk{width:min(100%,760px)}
-.c-kiosk .kiosk{width:44%;margin:0 auto}
-.c-kiosk .sms{position:absolute;right:0;top:20%;width:36%;transform:translateZ(90px) rotate(2deg)}
+.c-kiosk .kiosk{width:27%;margin:0 auto 0 17%}
+.c-kiosk .sms{position:absolute;right:0;top:14%;width:42%;font-size:clamp(.85rem,1.9vw,1.3rem);padding:clamp(12px,1.8vw,22px) clamp(14px,2.2vw,26px);border:1px solid #222;transform:translateZ(90px) rotate(2deg)}
 .c-doc{--rest:rotateX(8deg)}
 .c-doc .laptop{width:78%;margin-left:4%}
 .c-doc .paper{position:absolute;width:30%;right:0;bottom:4%;transform:translateZ(120px) rotate(4deg)}
@@ -113,10 +119,11 @@ h1,h2,h3,p{margin:0}
 
 @media (max-width:640px){
   .c-pos .tablet{width:84%}.c-pos .phone{width:25%;right:1%}
-  .c-kiosk .kiosk{width:56%;margin-left:6%}.c-kiosk .sms{width:42%;right:1%}
+  .c-kiosk .kiosk{width:40%;margin-left:4%}.c-kiosk .sms{width:54%;right:0;top:12%}
   .c-doc .laptop{width:84%;margin-left:4%}.c-doc .paper{width:34%;right:1%;bottom:-6%}
   .c-track .laptop{width:86%}.c-track .phone{width:23%;left:1%}
   .c-coop .monitor{width:78%;margin-left:0}.c-coop .tower{width:21%;right:0}
+  .hero{min-height:100vh;min-height:100svh;display:grid;align-content:center}
   .c-hero .laptop{width:76%}.c-hero .tablet{width:50%;left:1%}.c-hero .phone{width:19%;right:1%}
 }
 
@@ -330,7 +337,7 @@ h1,h2,h3,p{margin:0}
       <h2 class="title">Self-service kiosk.</h2>
       <p class="line">Customers order. They get a text when it's ready.</p>
       <div class="stage"><div class="scene c-kiosk">
-        <div class="kiosk"><div class="scr"><img src="assets/img/kiosk.webp" width="1200" height="1800" alt="ACA Laundry's order kiosk" loading="lazy"></div><div class="neck"></div><div class="foot"></div></div>
+        <div class="kiosk"><div class="cab"><div class="sign">Laundry</div><div class="scr"><img src="assets/img/kiosk.webp" width="1200" height="1800" alt="ACA Laundry's order kiosk" loading="lazy"></div><div class="chin"></div></div><div class="post"></div><div class="plate"></div></div>
         <div class="sms" aria-hidden="true"><b>ACA Laundry</b>Hi Rose! Your laundry is ready for pickup.</div>
       </div></div>
       <a class="more" href="work/auntie-analyn.html">See the build →</a>
