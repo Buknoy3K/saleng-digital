@@ -95,8 +95,8 @@ h1,h2,h3,p{margin:0}
 .c-pos{--rest:rotateX(6deg)}
 .c-pos .tablet{width:80%;transform:rotateY(-9deg)}
 .c-pos .phone{position:absolute;width:21%;right:2%;bottom:-12%;transform:translateZ(120px) rotateY(-16deg)}
-.c-kiosk{width:min(100%,760px)}
-.c-kiosk .kiosk{width:27%;margin:0 auto 0 17%}
+.c-kiosk{width:min(100%,1000px)}
+.c-kiosk .kiosk{width:31%;margin:0 auto 0 15%}
 .c-kiosk .sms{position:absolute;right:0;top:14%;width:42%;font-size:clamp(.85rem,1.9vw,1.3rem);padding:clamp(12px,1.8vw,22px) clamp(14px,2.2vw,26px);border:1px solid #222;transform:translateZ(90px) rotate(2deg)}
 .c-doc{--rest:rotateX(8deg)}
 .c-doc .laptop{width:78%;margin-left:4%}
@@ -173,7 +173,7 @@ h1,h2,h3,p{margin:0}
 /* phones: 3 per row (2 rows), compact */
 @media (max-width:899px){.types{gap:8px}.type{padding:10px 4px 14px;border-radius:18px}.type .live{font-size:.7rem;padding:3px 8px}.type strong{font-size:.9rem!important;text-align:center;line-height:1.15}.type:not(:has(.live)) .m{margin-top:25px}}
 /* PC: all six business types in one row (a bit wider than the page column), names on one line */
-@media (min-width:1024px){.types{grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-inline:-150px}.type{padding:14px 8px 20px;border-radius:22px}.type .m{width:min(100%,210px)}.type strong{font-size:1.2rem!important;white-space:nowrap;letter-spacing:-.015em}.type:not(:has(.live)) .m{margin-top:34px}}
+@media (min-width:1024px){.types{grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;margin-inline:calc(50% - 50vw / .67 + 48px)}.type{padding:20px 12px 30px;border-radius:26px}.type .live{font-size:1.05rem;padding:7px 14px}.type .m{width:100%}.type strong{font-size:1.6rem!important;text-align:center;letter-spacing:-.015em}.type:not(:has(.live)) .m{margin-top:44px}}
 @media (prefers-reduced-motion:reduce){.type .iso{transition:none}.type .live i{animation:none}}
 
 /* testimonials: the 3D people (clients.js), tap one to open their words */
@@ -333,8 +333,8 @@ h1,h2,h3,p{margin:0}
   :root{--tp:clamp(2.2rem,10.5vw,2.75rem)}
   .intro h1,.sec .title,.bk .cond,.bk.end .cond{font-size:var(--tp);margin-top:6px}
   .sec{padding-block:56px}
-  .stack > .sec[class*="p-"]{min-height:0;padding-block:44px 40px}
-  .stack > .sec.p-pos{padding-top:100px}  /* the label stays below the first screen; only the colour peeks in */
+  .stack > .sec[class*="p-"]{min-height:66vh;min-height:66svh;justify-content:flex-start;padding-block:84px 48px}  /* each product fills the screen, content starts near the top */
+  .stack .stage{padding-inline:14px}
   .stage{margin-top:28px}
   .line{font-size:1.05rem;margin-top:10px}
   .more{margin-top:12px}
@@ -499,7 +499,7 @@ h1,h2,h3,p{margin:0}
       <div class="sec-h" data-reveal><p class="mono">Pick a size</p><h2 class="cond">Pricing.</h2></div>
       <div class="prices">
         <div class="price" data-reveal><h3>Spark</h3><strong data-count="3500" data-pre="₱">₱3,500</strong><p>Up to 6 features</p></div>
-        <div class="price hot" data-reveal><h3>Flame</h3><strong data-count="6500" data-pre="₱">₱6,500</strong><p>Up to 12 features · staff logins</p></div>
+        <div class="price" data-reveal><h3>Flame</h3><strong data-count="6500" data-pre="₱">₱6,500</strong><p>Up to 12 features · staff logins</p></div>
         <div class="price" data-reveal><h3>Bonfire</h3><strong>By quote</strong><p>Branches · connected systems</p></div>
       </div>
       <p class="care" data-reveal>Care Plan from <b>₱400/month</b></p>
