@@ -282,6 +282,7 @@ h1,h2,h3,p{margin:0}
 @media (min-width:1024px){.stack > .sec{padding-block:56px}}
 .stack > .sec[class*="p-"]{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center}
 .stack > .sec[class*="p-"] > .wrap{width:100%}
+.stack > .sec.p-biz > .wrap{width:min(100% - 32px,1200px)}  /* keep the business picker header in its usual column */
 
 /* first screen: cream, one 3D icon above three lines (assets/js/hero3d.js) */
 .intro{position:relative;height:90vh;height:90svh;background:var(--cream);color:#0F2A1D;overflow:hidden}
@@ -470,7 +471,7 @@ h1,h2,h3,p{margin:0}
   </section>
 
   <!-- Business types -->
-  <section id="services" class="sec dark bk">
+  <section id="services" class="sec dark bk p-biz">
     <div class="wrap">
       <div class="sec-h" data-reveal><p class="mono">Every system is custom built</p><h2 class="cond">What business do you run?</h2><p>Tap yours to see what we built.</p></div>
       <div class="types">
