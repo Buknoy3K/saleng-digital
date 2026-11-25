@@ -2,6 +2,8 @@
 
 The studio's own site in the **Heartwood** direction: an amber resin hero with pine growth rings, and dark pine panels for the content. Plain HTML, CSS and JS. No build step, so what you see in the folder is what goes live.
 
+One exception: the 3D first screen. Edit `assets/js/hero3d.js` or `icons3d.js`, then run `npm install` (once) and `npm run build:3d` to rebuild `assets/js/hero3d.min.js`, which is the file the page actually loads (three.js is bundled inside, so nothing comes from another server). `assets/img/hero-poster.webp` is a still of the first icon shown until the 3D draws, and instead of it on data saver or 2G: re-take it with `make-poster.mjs` if the first icon changes.
+
 ## Pages
 Everything is on one long home page (`index.html`). The menu scrolls to each section and highlights the one you're reading.
 

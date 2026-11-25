@@ -1,0 +1,12 @@
+{
+  "name": "saleng-digital-site",
+  "private": true,
+  "description": "Only used to rebuild the first-screen 3D file. The site itself has no build step.",
+  "scripts": {
+    "build:3d": "esbuild assets/js/hero3d.js --bundle --minify --format=esm --target=es2020 --legal-comments=none --outfile=assets/js/hero3d.min.js"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "three": "0.170.0"
+  }
+}

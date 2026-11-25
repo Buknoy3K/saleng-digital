@@ -27,7 +27,9 @@ if (canvas) {
   });
 
   const ease = x => 1 - Math.pow(1 - x, 3);
+  const poster = document.querySelector('[data-hero-poster]');   // still picture shown until this first frame
   S.loop((dt, t) => {
+    if (poster) poster.classList.add('off');
     since += dt; if (!still && since > 1.8 && swap >= 1) go(1);
     swap = Math.min(1, swap + dt / .45);
     toys.forEach((ty, i) => {
