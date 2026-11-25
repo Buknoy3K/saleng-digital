@@ -14,8 +14,8 @@ window.CONTENT = {
   flameFeatures: 'Up to 12 features',
 
   // Pricing
-  spark: '₱3,500',
-  flame: '₱6,500',
+  spark: '₱3,900',
+  flame: '₱6,900',
   bonfire: 'By quote',
   care: '₱400',
 
